@@ -9,7 +9,8 @@ app.use(express.json());
 const groupsRoutes = require("./groups/groupsRoutes");
 const articleRoutes = require("./articles/articleRoutes");
 const categoryRoutes = require("./categories/categoryRoutes");
-
+const tableRoutes = require("./tables/tableRoutes");
+const orderRoutes = require("./orders/ordersRoutes");
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -24,7 +25,13 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./articles/*.js", "./groups/*.js", "./categories/*.js"],
+  apis: [
+    "./articles/*.js",
+    "./groups/*.js",
+    "./categories/*.js",
+    "./tables/*.js",
+    "./orders/*.js",
+  ],
 };
 
 const specs = swaggerJsdoc(swaggerOptions);
@@ -32,6 +39,8 @@ app.use("/api-caffe", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/groups", groupsRoutes);
 app.use("/articles", articleRoutes);
 app.use("/categories", categoryRoutes);
+app.use("/tables", tableRoutes);
+app.use("/orders", orderRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
